@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" role="img" aria-labelledby="t"><title id="t">ORBIT logo</title>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b8a9ff"/><stop offset="1" stop-color="#61ddcf"/></linearGradient></defs>
+<circle cx="36" cy="36" r="31" fill="#25213d" stroke="#524a80" stroke-width="1.6"/>
+<ellipse cx="36" cy="36" rx="24" ry="11" transform="rotate(-35 36 36)" stroke="url(#g)" stroke-width="3" fill="none"/>
+<ellipse cx="36" cy="36" rx="23" ry="10" transform="rotate(40 36 36)" stroke="#897bec" stroke-opacity=".68" stroke-width="2" fill="none"/>
+<circle cx="36" cy="36" r="6" fill="#eee9ff"/><circle cx="54" cy="22" r="4.5" fill="#60ddcf"/>
+</svg>
