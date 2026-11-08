@@ -116,7 +116,14 @@ inputs.notes.addEventListener('input', updateNotesCounter);
     const query = filterSearch.value.trim().toLowerCase();
     const tasks = OrbitStore.getTasks().filter(task => {
       const matchesSearch = `${task.title} ${task.subject} ${task.notes || ''}`.toLowerCase().includes(query);
-      const matchesStatus = filterStatus.value === 'all' || (filterStatus.value === 'complete' ? task.completed : !task.completed);
+const matchesStatus =
+    filterStatus.value === 'all' ||
+    (filterStatus.value === 'complete' && task.completed) ||
+    (filterStatus.value === 'pending' && !task.completed) ||
+    (filterStatus.value === 'overdue' &&
+        !task.completed &&
+        OrbitApp.daysUntil(task.dueDate) < 0);
+
       const matchesPriority = filterPriority.value === 'all' || task.priority === filterPriority.value;
       return matchesSearch && matchesStatus && matchesPriority;
     });
