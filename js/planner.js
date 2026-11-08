@@ -159,6 +159,13 @@ return matchesSearch && matchesStatus &&
     tasks.forEach(task => list.append(buildCard(task)));
     empty.hidden = tasks.length > 0;
     
+const emptyMessage = empty.querySelector('p');
+
+emptyMessage.textContent =
+    OrbitStore.getTasks().length === 0
+        ? 'No tasks yet. Create your first task using the form.'
+        : 'No matching tasks. Change your search or reset filters.';
+
 countLabel.textContent =
     `Showing ${tasks.length} of ${OrbitStore.getTasks().length} tasks`;
 
