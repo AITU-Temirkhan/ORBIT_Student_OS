@@ -20,6 +20,16 @@
   const filterStatus = document.getElementById('filterStatus');
   const filterPriority = document.getElementById('filterPriority');
   const filterSort = document.getElementById('filterSort');
+  
+const filterSubject = document.getElementById('filterSubject');
+
+OrbitData.subjects.forEach(subject => {
+    const option = document.createElement('option');
+    option.value = subject;
+    option.textContent = subject;
+    filterSubject.append(option);
+});
+
   const touched = new Set();
   
 const notesCounter = document.getElementById('notesCounter');
@@ -125,7 +135,14 @@ const matchesStatus =
         OrbitApp.daysUntil(task.dueDate) < 0);
 
       const matchesPriority = filterPriority.value === 'all' || task.priority === filterPriority.value;
-      return matchesSearch && matchesStatus && matchesPriority;
+      
+const matchesSubject =
+    filterSubject.value === 'all' ||
+    task.subject === filterSubject.value;
+
+return matchesSearch && matchesStatus &&
+       matchesPriority && matchesSubject;
+
     });
     const mode = filterSort.value;
     tasks.sort((a, b) => {
@@ -217,10 +234,11 @@ countLabel.textContent =
     clearForm();
     statusLabel.textContent = wasEditing ? 'Your task has been updated successfully.' : 'Your new task has been added successfully.';
     OrbitEffects.toast(wasEditing ? 'Task updated!' : 'Task added!');
+    filterSubject.value = 'all';
     render();
   });
   list.addEventListener('click', onCardClick);
-  [filterSearch, filterStatus, filterPriority, filterSort].forEach(input => input.addEventListener(input === filterSearch ? 'input' : 'change', render));
+  [filterSearch, filterStatus, filterPriority, filterSubject, filterSort].forEach(input => input.addEventListener(input === filterSearch ? 'input' : 'change', render));
   document.getElementById('cancelEdit').addEventListener('click', () => { clearForm(); statusLabel.textContent = ''; });
   document.getElementById('clearFilters').addEventListener('click', () => {
     filterSearch.value = ''; filterStatus.value = 'all'; filterPriority.value = 'all'; filterSort.value = 'due'; render();
