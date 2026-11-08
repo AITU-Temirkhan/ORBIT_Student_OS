@@ -3,6 +3,7 @@
   'use strict';
   if (document.body.dataset.page !== 'focus') return;
   const timerLabel = document.getElementById('timerLabel');
+  const timerCircle = document.querySelector('.timer-circle');
   const startButton = document.getElementById('startTimer');
   const pauseButton = document.getElementById('pauseTimer');
   const resetButton = document.getElementById('resetTimer');
@@ -24,6 +25,7 @@
     document.title = `${format(remaining)} · ORBIT Focus`;
     progressCircle.style.strokeDashoffset = String(circumference * (1 - (duration ? remaining / duration : 0)));
     startButton.disabled = running;
+    timerCircle.classList.toggle('is-running', running);
     pauseButton.disabled = !running;
     startButton.textContent = remaining < duration ? (mode === 'break' ? 'Resume break' : 'Resume focus') : (mode === 'break' ? 'Start break' : 'Start focus');
     const status = document.getElementById('timerStatus');

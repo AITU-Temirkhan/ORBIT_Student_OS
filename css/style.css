@@ -348,3 +348,11 @@ textarea.form-control { resize:vertical; min-height:70px; }
 .skip-link:focus {
     transform: translateY(0);
 }
+
+.timer-circle.is-running .timer-progress {
+    stroke: #a899ff;
+}
+
+.timer-circle.is-running .timer-digits strong {
+    color: #a899ff;
+}
