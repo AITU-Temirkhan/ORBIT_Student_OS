@@ -216,6 +216,20 @@
 document.addEventListener('keydown', function(event) {
     const active = document.activeElement;
     const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
+    
+    if (event.key.toLowerCase() === 'n' &&
+        !typing &&
+        !['BUTTON', 'A'].includes(active.tagName) &&
+        !event.ctrlKey && !event.altKey && !event.metaKey &&
+        !event.repeat) {
+
+        event.preventDefault();
+        document.getElementById('taskFormSection').scrollIntoView({
+            behavior: 'smooth'
+        });
+        inputs.title.focus({ preventScroll: true });
+    }
+
 
     if (event.key === '/' && !typing) {
         event.preventDefault();
