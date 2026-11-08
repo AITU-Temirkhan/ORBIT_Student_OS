@@ -333,3 +333,18 @@ textarea.form-control { resize:vertical; min-height:70px; }
  .credits { text-align:left; }
 }
 @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 9999;
+    padding: 10px 16px;
+    background: #66e4c9;
+    color: #101625;
+    border-radius: 10px;
+    transform: translateY(-150%);
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
