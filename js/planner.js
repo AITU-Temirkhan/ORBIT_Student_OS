@@ -212,6 +212,23 @@
     OrbitStore.clearSampleTasks();
     render(); OrbitEffects.toast('Demo tasks removed.');
   });
+  
+document.addEventListener('keydown', function(event) {
+    const active = document.activeElement;
+    const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
+
+    if (event.key === '/' && !typing) {
+        event.preventDefault();
+        filterSearch.focus();
+    }
+
+    if (event.key === 'Escape' && active === filterSearch) {
+        filterSearch.value = '';
+        render();
+        filterSearch.blur();
+    }
+});
+
   inputs.dueDate.min = OrbitApp.todayISO();
   render();
 })();
