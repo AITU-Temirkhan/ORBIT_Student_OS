@@ -38,7 +38,11 @@
     <div class="timer-circle"><svg viewBox="0 0 240 240" class="timer-svg" role="img" aria-label="Time remaining progress ring"><circle cx="120" cy="120" r="98" class="timer-track"/><circle cx="120" cy="120" r="98" class="timer-progress" id="timerProgress"/></svg><div class="timer-digits"><span class="ring-label">TIME REMAINING</span><strong id="timerLabel" role="timer">25:00</strong><span>Stay in your orbit ✦</span></div></div>
     <p id="timerStatus" class="timer-status" aria-live="polite">Ready when you are.</p>
     <div class="timer-actions"><button type="button" class="primary-link button-as-link" id="startTimer">Start focus</button><button type="button" class="secondary-button" id="pauseTimer" disabled>Pause</button><button type="button" class="secondary-button" id="resetTimer">↻ Reset</button></div>
-    <p class="fine-print">Only fully completed sessions are added to your history. Keep this tab open while the timer runs.</p>
+    <p class="fine-print">
+    Press P to start or pause the timer.
+    Only fully completed sessions are saved.
+    Keep this tab open while the timer runs.
+</p>
   </section>
   <section class="focus-side"><div class="panel focus-motivation"><span class="tiny-star">✦</span><p class="eyebrow">A REMINDER</p><h2>Consistency beats intensity.</h2><p>Start with just one session. The hardest part is often getting started.</p></div>
   <div class="panel focus-summary"><p class="eyebrow">YOUR PROGRESS</p><div class="summary-line"><span>Total minutes focused</span><strong id="focusMinutes">0</strong></div><div class="summary-line"><span>Minutes focused today</span><strong id="todayFocus">0</strong></div><div class="summary-line"><span>Completed sessions</span><strong id="focusSessions">0</strong></div><div class="summary-line"><span>Tasks finished</span><strong id="finishedTasks">0</strong></div><div class="summary-line"><span>Task completion</span><strong id="focusCompletion">0%</strong></div></div></section>

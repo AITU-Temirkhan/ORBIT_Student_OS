@@ -114,6 +114,27 @@
       col.append(value, barWrap, day); grid.append(col);
     });
   }
+  
+document.addEventListener('keydown', function(event) {
+    const interactive = document.activeElement.closest(
+        'input, textarea, select, button, a, [contenteditable="true"]'
+    );
+
+    if (event.key.toLowerCase() !== 'p' ||
+        event.ctrlKey || event.altKey ||
+        event.metaKey || event.repeat || interactive) {
+        return;
+    }
+
+    event.preventDefault();
+
+    if (running) {
+        pause();
+    } else {
+        start();
+    }
+});
+
   presets.forEach(button => button.addEventListener('click', () => setPreset(Number(button.dataset.focusMinutes), button)));
   startButton.addEventListener('click', start);
   pauseButton.addEventListener('click', pause);
