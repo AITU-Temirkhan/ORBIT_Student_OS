@@ -134,7 +134,10 @@ inputs.notes.addEventListener('input', updateNotesCounter);
     list.replaceChildren();
     tasks.forEach(task => list.append(buildCard(task)));
     empty.hidden = tasks.length > 0;
-    countLabel.textContent = `${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'} found`;
+    
+countLabel.textContent =
+    `Showing ${tasks.length} of ${OrbitStore.getTasks().length} tasks`;
+
     OrbitApp.updateTaskCount();
     const stats = OrbitApp.calcStats(OrbitStore.getTasks(), OrbitStore.getSessions());
     document.getElementById('plannerPending').textContent = stats.pending;
