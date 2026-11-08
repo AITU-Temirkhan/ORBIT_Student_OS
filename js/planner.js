@@ -21,6 +21,16 @@
   const filterPriority = document.getElementById('filterPriority');
   const filterSort = document.getElementById('filterSort');
   const touched = new Set();
+  
+const notesCounter = document.getElementById('notesCounter');
+
+function updateNotesCounter() {
+    notesCounter.textContent =
+        `${inputs.notes.value.length} / 240 characters`;
+}
+
+inputs.notes.addEventListener('input', updateNotesCounter);
+
   let editingId = null;
 
   const fieldErrors = {
