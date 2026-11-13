@@ -150,7 +150,7 @@
     empty.hidden = tasks.length > 0;
     empty.querySelector('p').textContent = OrbitStore.getTasks().length === 0
       ? 'No tasks yet. Create your first task using the form.'
-      : 'No matching tasks. Change your search or reset filters.';
+      : 'No tasks match your filters. Try another keyword or click Reset filters to see all tasks.';
     countLabel.textContent = `Showing ${tasks.length} of ${OrbitStore.getTasks().length} tasks`;
     OrbitApp.updateTaskCount();
     const stats = OrbitApp.calcStats(OrbitStore.getTasks(), OrbitStore.getSessions());
