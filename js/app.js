@@ -109,6 +109,23 @@
         col.append(bar, label); weekDays.append(col);
       });
     }
+    const profile = OrbitStore.getProfile();
+    const goal = Number(profile?.dailyGoal) || 60;
+    const today = todayISO();
+    const todayMinutes = sessions.filter(session => session.date === today).reduce((sum, session) => sum + (Number(session.minutes) || 0), 0);
+    const goalPercentage = Math.min(100, Math.round(todayMinutes / goal * 100));
+    const focusTitle = document.getElementById('missionTitle');
+    const focusDetail = document.getElementById('missionDetail');
+    if (focusTitle) focusTitle.textContent = recommended ? `Next mission: ${recommended.title}` : 'Your study plan is clear.';
+    if (focusDetail) focusDetail.textContent = recommended ? `${recommended.subject} · ${recommended.estimate} min estimated · ${dueLabel(recommended.dueDate, false)}` : 'You have completed your tasks. Take a well-earned break.';
+    const goalLabel = document.getElementById('missionGoalText');
+    if (goalLabel) goalLabel.textContent = `${todayMinutes} / ${goal} min`;
+    const goalBar = document.getElementById('missionGoalBar');
+    if (goalBar) goalBar.style.width = `${goalPercentage}%`;
+    const goalMeter = document.getElementById('missionGoalMeter');
+    if (goalMeter) goalMeter.setAttribute('aria-valuenow', String(goalPercentage));
+    const missionLink = document.getElementById('missionFocusLink');
+    if (missionLink) missionLink.dataset.taskId = recommended?.id || '';
     updateTaskCount();
   }
   document.addEventListener('DOMContentLoaded', function () {
@@ -121,6 +138,10 @@
     renderDashboard();
     const dashboardSearch = document.getElementById('dashboardSearch');
     if (dashboardSearch) dashboardSearch.addEventListener('input', renderDashboard);
+    document.getElementById('missionFocusLink')?.addEventListener('click', event => {
+      const taskId = event.currentTarget.dataset.taskId;
+      if (taskId) OrbitStore.setActiveTask(taskId);
+    });
     window.addEventListener('orbit:data-changed', () => { updateTaskCount(); renderDashboard(); });
   });
   window.OrbitApp = { el, todayISO, daysUntil, humanDate, dueLabel, priorityLabel, calcStats, upcoming, renderDashboard, updateTaskCount };

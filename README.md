@@ -1,103 +1,71 @@
-# ORBIT — Student OS
+# ORBIT — Student OS | Final Edition
 
-**Web Technologies 1 — Endterm Project**
+A finished, responsive, client-side productivity workspace for students. The Final Edition **extends the Endterm ORBIT project** and must be published in the **same GitHub repository**, not as a new topic.
 
-A polished, responsive student productivity web application built with HTML, CSS, Bootstrap, vanilla JavaScript and jQuery. The website is static and can be published on GitHub Pages. It does not require a backend or account.
+- GitHub repository: https://github.com/AITU-Temirkhan/ORBIT_Student_OS
+- GitHub Pages target: https://aitu-temirkhan.github.io/ORBIT_Student_OS/
+- Student: **Sagat Temirkhan** (individual project)
+- Technology: HTML5, CSS3, Bootstrap 5, JavaScript, jQuery, localStorage
 
-## Start the project
+## What's new since Endterm
 
-1. Extract the ZIP archive.
-2. Open the `ORBIT_Student_OS` folder in Visual Studio Code.
-3. With the VS Code **Live Server** extension, right-click `index.html` and select **Open with Live Server** (or click **Go Live**).
-4. Open the three pages using the sidebar: **Dashboard**, **Task planner**, **Focus & insights**.
+| Previous shortcoming | Final improvement |
+|---|---|
+| Switching an active timer triggered a blocking browser `confirm()` | Presets switch immediately; an unobtrusive in-page toast explains the reset. No native `confirm`/`alert` calls remain. |
+| Only a dark presentation | Branded light **and** dark modes with a keyboard-operable toggle, early theme initialization, CSS variables and persistent choice. |
+| No personal study identity | New **My profile** page saves a display name, study track, daily focus goal, weekly completion target and preferred focus style. |
+| Pomodoro sessions were not connected to assignments | **Focus Quest**: choose a task in Focus Studio, or press **Focus** on a task card. Completed sessions record the linked task name and ID. |
+| Only the original task/session persistence | Profile, focus selection and theme are also saved in localStorage; original Endterm keys remain compatible. |
+| Limited data portability and deletion controls | Download and restore a versioned JSON backup; delete tasks/sessions individually or clear all with a branded accessible dialog. |
+| Confusing disabled Start and Pause buttons | Exactly one primary timer action is shown at a time, based on the timer state. |
+| Dashboard metrics were impersonal | Personalized greeting, recommended focus mission and daily-goal progress meter shared with Focus/Profile. |
 
-You may open `index.html` directly in a browser, but using Live Server is preferable for consistent `localStorage` and URL behavior. Bootstrap CSS and Google Fonts are loaded from public CDNs; an internet connection is recommended. jQuery 3.6.1 is bundled locally in `vendor/`.
+## Pages
 
-## Features
+- `index.html` — Dashboard: live task counts, momentum score, priority recommendation, weekly rhythm and personal focus mission.
+- `planner.html` — Task Planner: six-field validated form; create/edit/complete/delete tasks; filter by search, status, priority and subject; sort; **Focus** action; sample-data removal; clear all.
+- `focus.html` — Focus Studio: work/break modes, accessible time ring, pause/resume/reset, selected task, completed sessions with per-item removal, weekly chart and daily goal.
+- `profile.html` — My profile: validated preference form, personal statistics and goals, local JSON export/import.
 
-### Dashboard (`index.html`)
-- Live counts for open, completed and overdue tasks, plus accumulated focus minutes.
-- **Momentum Score:** transparent motivational metric (70% completion rate + up to 30% focus bonus for 300 minutes); it is not a grade.
-- Shows up to five upcoming deadlines with an interactive search box.
-- Suggests the next deadline to tackle.
-- Completion progress bar and last-seven-days focus chart.
-- jQuery accordion with study tips and animated page scroll.
+## Run locally
 
-### Task planner (`planner.html`)
-- A Bootstrap-based form with **six fields**: title, subject, deadline, priority, estimated minutes, notes.
-- Live inline validation: required fields, title length 3–80 characters, valid subject/priority, deadline not in the past, 15–240 whole minutes, and notes no longer than 240 characters.
-- Errors disappear after correction, valid submit clears the form and shows success feedback.
-- Create / read / update / delete tasks and mark complete / reopen.
-- Search, sort and filter by status and priority, including useful empty-state feedback.
-- Tasks are rendered with JavaScript DOM methods from an array of **12 demo task objects**; user entries are stored in `localStorage`.
-- Demo tasks can be removed without removing personal tasks.
+1. Unzip the package, open the `ORBIT_Student_OS` folder in VS Code.
+2. Right-click `index.html` and choose **Open with Live Server**, or open a terminal in that folder and run `python -m http.server 8000`.
+3. Open `http://localhost:8000/index.html`.
+4. Use any tab to navigate among the four pages. No account, server or build step is required.
 
-### Focus & insights (`focus.html`)
-- Real countdown timer with 15, 25 and 50-minute study presets and 5/10-minute break presets.
-- Start, pause, resume and reset; elapsed time uses wall-clock timestamps to handle inactive tabs reasonably well.
-- Completed **study sessions** record duration and date in `localStorage`; breaks do not count as study time.
-- Weekly focus chart, recent session history, total focus minutes and task completion metrics.
-- Clear focus history with confirmation.
+The project includes `vendor/jquery.min.js`. Bootstrap 5 and Google Fonts use their public CDNs; internet access is useful for their styles/fonts. Original ORBIT CSS and included layout fallbacks keep the core UI functional if those services are unavailable.
 
-## Project structure
+## Data and privacy
 
-```text
-ORBIT_Student_OS/
-├── index.html
-├── planner.html
-├── focus.html
-├── css/style.css
-├── images/orbit-logo.svg
-├── js/data.js
-├── js/storage.js
-├── js/effects.js
-├── js/app.js
-├── js/planner.js
-├── js/focus.js
-├── vendor/jquery.min.js
-├── README.md
-├── CREDITS.md
-├── TESTING.md
-└── GIT_PLAN.md
-```
+No password or real registration is collected. The demo profile is a **local preference**, not a secure account. Do not enter secrets; all saved data are visible to anyone with access to the browser profile. No backend, cloud sync or database is implemented. Clearing browser site data removes the saved workspace unless you exported a backup.
 
-## Endterm rubric alignment
+| localStorage key | Data |
+|---|---|
+| `orbit.tasks.v1` | Planner task objects (pre-existing Endterm data kept). |
+| `orbit.focusSessions.v1` | Completed focus sessions (pre-existing). |
+| `orbit.profile.v1` | Name, study track, daily/weekly goals and preferred timer mode. |
+| `orbit.theme.v1` | `dark` or `light`. |
+| `orbit.activeTask.v1` | ID of the current focus task. |
 
-| Criterion | Implementation |
-| --- | --- |
-| Hosting + responsiveness + accessibility (8) | Static pages for GitHub Pages, one responsive nav, heading hierarchy, visible focus styles, form labels, semantic markup; verify 375/768/1280 px |
-| Bootstrap forms + validation (12) | 6 fields, clear required + additional validation, per-field messages, no JavaScript alerts for errors |
-| JS functionality (16) | 12 objects with 8+ properties; dynamic DOM cards, CRUD, search/filter/sort, timer, progress calculation, no page reload |
-| jQuery effects (9) | Tips accordion `slideToggle`, messages `fadeIn`/`fadeOut`, smooth scrolling `animate`; `.stop(true, true)` for rapid clicks |
-| Design and UX (10) | Original dark visual system, success/error/empty states, bespoke SVG logo and momentum score |
-| Improvement history / teamwork (15) | Depends on the real Git history and instructor-approved topic choice; not automatically earned by code |
-| Defense and code quality (30) | Separated files and readable functions; student must explain design and functionality in their own words |
+The JSON backup export includes the tasks, sessions, profile and selected focus task. Import checks the backup format, version and basic field types before offering a **custom** confirmation dialog. Import intentionally overwrites the local workspace; export a backup first if needed.
 
-**Important:** A complete ZIP does not guarantee a grade. You must publish it, test it, satisfy any instructor-specific topic/repository requirements and explain your own code in the live defense. The instructor's original file requires disclosure of AI assistance both on the website and in the report.
+## Deploy to the **existing** GitHub repo
 
-## Deploy to GitHub Pages
+**Important:** The files provided here are not automatically deployed. Do not create a new repository or change the topic.
 
-1. Make a new GitHub repository (or use the exact one your instructor approved).
-2. Commit the project contents **from inside the project folder** so `index.html` is at the repository root.
-3. Push to `main`.
-4. GitHub repository → **Settings → Pages → Build and deployment → Deploy from a branch** → `main` → `/(root)` → Save.
-5. Open the published URL and verify all pages and paths. Data is browser-local: using a different browser/device gives a separate workspace.
+1. Open your existing local `ORBIT_Student_OS` Git repository in VS Code.
+2. Copy the **contents** of this ZIP's `ORBIT_Student_OS` directory into the existing repository folder, replacing modified files. Preserve the existing `.git` directory (it is intentionally not inside the ZIP).
+3. Use Source Control to inspect changes; test them locally, then commit and push them to the existing `main` branch before the Final deadline. Do not fabricate commits or commit after the deadline.
+4. Open the GitHub Pages link and hard refresh it; check `index.html`, `planner.html`, `focus.html`, `profile.html`, both modes and localStorage. GitHub Pages normally serves from the configured `main` / root directory.
+5. Submit `Final_Sagat_Temirkhan.zip` and `Final_Sagat_Temirkhan.pdf` to the Final folder in Moodle/LMS.
 
-Example terminal commands, when already inside the project directory:
+**Git history matters.** The instructor expects regular, authentic work after Endterm, not just one late commit. See `FINAL_GIT_PLAN.md` for a truthful feature-by-feature workflow.
 
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "Add functional ORBIT Student OS starter application"
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
-```
+## Test & defense
 
-Replace the example URL with your own repository; create the empty GitHub repository first. Git configuration or authentication may be needed.
+Read `TESTING.md`, `FINAL_DEFENSE.md` and `CHANGELOG_FINAL.md`. The report contains actual captured browser previews from this local Final build. These screenshots are **not proof the Final version is already published** until step 4 above is complete.
 
-## Example defense explanation
+## Credits
 
-> I built ORBIT Student OS as a static productivity app. Task objects are stored in an array and saved to localStorage. JavaScript generates cards using DOM methods, which makes filtering and updating tasks possible without refreshing the page. The form validates each field before saving. I use jQuery for three UI effects, and a separate timer module records completed focus sessions. I used ChatGPT as a coding assistant and disclosed it in the website credits and report.
-
-See `CREDITS.md`, `TESTING.md` and `GIT_PLAN.md` before submission.
+See `CREDITS.md` and the **Credits & AI use** disclosure in the website footer. The task data are illustrative; the ORBIT icon was created for this project.

@@ -8,7 +8,9 @@
   <link rel="icon" href="images/orbit-logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/theme-init.js"></script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/final.css">
 </head>
 <body data-page="focus">
   <a class="skip-link" href="#mainContent">Skip to main content</a>
@@ -18,34 +20,31 @@
       <div class="sidebar-section-label">YOUR SPACE</div>
       <nav aria-label="Main navigation" class="sidebar-nav"><a href="index.html" class="sidebar-link " ><span class="nav-glyph" aria-hidden="true">◈</span><span>Dashboard</span></a>
 <a href="planner.html" class="sidebar-link " ><span class="nav-glyph" aria-hidden="true">▤</span><span>Task planner</span><span class="nav-count" id="navTaskCount">0</span></a>
-<a href="focus.html" class="sidebar-link active" aria-current="page"><span class="nav-glyph" aria-hidden="true">◷</span><span>Focus & insights</span></a></nav>
+<a href="focus.html" class="sidebar-link active" aria-current="page"><span class="nav-glyph" aria-hidden="true">◷</span><span>Focus & insights</span></a><a href="profile.html" class="sidebar-link"><span class="nav-glyph" aria-hidden="true">♙</span><span>My profile</span></a></nav>
       <div class="sidebar-bottom">
         <div class="sidebar-quote"><span class="quote-symbol">✦</span><p>Small steps build big results.</p><span class="muted-tiny">ONE SESSION AT A TIME</span></div>
-        <div class="sidebar-user"><span class="avatar">S</span><span><strong>Student workspace</strong><small>Saved in this browser</small></span><span class="online-dot" aria-label="Local workspace"></span></div>
+        <div class="sidebar-user"><span class="avatar" id="workspaceAvatar">S</span><span><strong id="workspaceName">Student workspace</strong><small>Saved in this browser</small></span><span class="online-dot" aria-label="Local workspace"></span></div>
       </div>
     </aside>
     <div class="main-panel">
       <header class="topbar">
         <div class="topbar-breadcrumb">Workspace <span class="breadcrumb-separator">/</span> <strong>Focus & insights</strong></div>
-        <div class="topbar-right"><span class="topbar-date" id="currentDate"></span><span class="status-dot" aria-hidden="true"></span><span class="status-label">All local</span></div>
+        <div class="topbar-right"><button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to light mode" aria-pressed="false"><span class="theme-symbol" aria-hidden="true">☀</span><span class="theme-copy">Light mode</span></button><span class="topbar-date" id="currentDate"></span><span class="status-dot" aria-hidden="true"></span><span class="status-label">All local</span></div>
       </header>
       <main class="content-shell" id="mainContent">
         
 <section class="page-heading"><div><p class="eyebrow">FIND YOUR FLOW</p><h1>Focus <em>Studio.</em></h1><p class="section-intro">Put distractions aside. Give your full attention to one thing at a time.</p></div><a href="planner.html" class="secondary-link">↗ See my tasks</a></section>
 <div class="focus-layout">
   <section class="panel focus-timer-panel" aria-labelledby="focusTimerTitle"><div class="panel-heading"><div><p class="eyebrow">YOUR FOCUS ZONE</p><h2 id="focusTimerTitle">Deep work session</h2></div><span class="focus-live"><span class="status-dot"></span> DEVICE TIMER</span></div>
+    <div class="focus-task-selector"><label for="focusTaskSelect" class="form-label">I'm working on</label><select id="focusTaskSelect" class="form-select"><option value="">General focus session</option></select><p id="selectedTaskHint" class="muted-tiny">Choose a task to connect your focus session to your planner.</p></div>
     <div class="preset-row" role="group" aria-label="Choose focus duration"><button type="button" class="preset-button active" data-focus-minutes="25" aria-pressed="true">25 min · Classic</button><button type="button" class="preset-button" data-focus-minutes="50" aria-pressed="false">50 min · Deep work</button><button type="button" class="preset-button" data-focus-minutes="15" aria-pressed="false">15 min · Quick</button><button type="button" class="preset-button" data-focus-minutes="5" data-session-type="break" aria-pressed="false">5 min · Break</button><button type="button" class="preset-button" data-focus-minutes="10" data-session-type="break" aria-pressed="false">10 min · Break</button></div>
     <div class="timer-circle"><svg viewBox="0 0 240 240" class="timer-svg" role="img" aria-label="Time remaining progress ring"><circle cx="120" cy="120" r="98" class="timer-track"/><circle cx="120" cy="120" r="98" class="timer-progress" id="timerProgress"/></svg><div class="timer-digits"><span class="ring-label">TIME REMAINING</span><strong id="timerLabel" role="timer">25:00</strong><span>Stay in your orbit ✦</span></div></div>
     <p id="timerStatus" class="timer-status" aria-live="polite">Ready when you are.</p>
-    <div class="timer-actions"><button type="button" class="primary-link button-as-link" id="startTimer">Start focus</button><button type="button" class="secondary-button" id="pauseTimer" disabled>Pause</button><button type="button" class="secondary-button" id="resetTimer">↻ Reset</button></div>
-    <p class="fine-print">
-    Press P to start or pause the timer.
-    Only fully completed sessions are saved.
-    Keep this tab open while the timer runs.
-</p>
+    <div class="timer-actions"><button type="button" class="primary-link button-as-link" id="startTimer">Start focus</button><button type="button" class="secondary-button" id="pauseTimer" hidden>Pause</button><button type="button" class="secondary-button" id="resetTimer">↻ Reset</button></div>
+    <p class="fine-print">Press P to start or pause the timer. Only fully completed sessions are added to your history. Keep this tab open while the timer runs.</p>
   </section>
   <section class="focus-side"><div class="panel focus-motivation"><span class="tiny-star">✦</span><p class="eyebrow">A REMINDER</p><h2>Consistency beats intensity.</h2><p>Start with just one session. The hardest part is often getting started.</p></div>
-  <div class="panel focus-summary"><p class="eyebrow">YOUR PROGRESS</p><div class="summary-line"><span>Total minutes focused</span><strong id="focusMinutes">0</strong></div><div class="summary-line"><span>Minutes focused today</span><strong id="todayFocus">0</strong></div><div class="summary-line"><span>Completed sessions</span><strong id="focusSessions">0</strong></div><div class="summary-line"><span>Tasks finished</span><strong id="finishedTasks">0</strong></div><div class="summary-line"><span>Task completion</span><strong id="focusCompletion">0%</strong></div></div></section>
+  <div class="panel focus-summary"><p class="eyebrow">YOUR PROGRESS</p><div class="daily-goal-focus"><span>Today's personal goal</span><strong id="focusGoalCaption">0 / 60 min</strong><div class="meter" role="progressbar" id="focusGoalMeter" aria-label="Today's focus goal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="meter-fill" id="focusGoalBar"></div></div></div><div class="summary-line"><span>Total minutes focused</span><strong id="focusMinutes">0</strong></div><div class="summary-line"><span>Minutes focused today</span><strong id="todayFocus">0</strong></div><div class="summary-line"><span>Completed sessions</span><strong id="focusSessions">0</strong></div><div class="summary-line"><span>Tasks finished</span><strong id="finishedTasks">0</strong></div><div class="summary-line"><span>Task completion</span><strong id="focusCompletion">0%</strong></div></div></section>
 </div>
 <div class="focus-bottom">
  <section class="panel focus-chart-panel"><div class="panel-heading"><div><p class="eyebrow">SEE YOUR CONSISTENCY</p><h2>Weekly focus activity</h2></div><span class="muted-tiny">MINUTES / DAY</span></div><div id="focusWeekChart" class="focus-chart" role="img" aria-label="Focus minutes for the last seven days"></div><p class="helper-text">Each bar represents completed focus minutes on that day.</p></section>
@@ -55,16 +54,18 @@
 
       </main>
       <footer class="site-footer">
-        <span>© ORBIT Student OS · Made for focused learning.</span>
-        <details class="credits"><summary>Credits &amp; AI use</summary><p>Project designed and developed with assistance from ChatGPT (OpenAI). Uses Bootstrap 5 (MIT), jQuery 3.6.1 (MIT), and an original ORBIT SVG logo. All task examples are demo data. No user information is sent to a server.</p></details>
+        <span>© ORBIT Student OS · Final Edition · Made for focused learning.</span>
+        <details class="credits"><summary>Credits &amp; AI use</summary><p>Project developed with assistance from ChatGPT (OpenAI). Uses Bootstrap 5 (MIT), jQuery 3.6.1 (MIT), Google Fonts and the original ORBIT SVG logo. All task examples are demo data. No user information is sent to a server.</p></details>
       </footer>
     </div>
   </div>
+  <dialog id="appConfirmDialog" class="orbit-dialog" aria-labelledby="confirmTitle" aria-describedby="confirmMessage"><div class="dialog-orbit" aria-hidden="true">✦</div><h2 id="confirmTitle">Please confirm</h2><p id="confirmMessage"></p><div class="dialog-actions"><button type="button" class="secondary-button" id="confirmCancel">Keep as it is</button><button type="button" class="primary-link button-as-link" id="confirmAccept">Confirm</button></div></dialog>
   <div id="globalToast" class="global-toast" role="status" aria-live="polite" hidden></div>
   <script src="vendor/jquery.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/effects.js"></script>
+  <script src="js/ui.js"></script>
   <script src="js/app.js"></script>
   <script src="js/focus.js"></script>
 </body>

@@ -20,27 +20,19 @@
   const filterStatus = document.getElementById('filterStatus');
   const filterPriority = document.getElementById('filterPriority');
   const filterSort = document.getElementById('filterSort');
-  
-const filterSubject = document.getElementById('filterSubject');
-
-OrbitData.subjects.forEach(subject => {
+  const filterSubject = document.getElementById('filterSubject');
+  OrbitData.subjects.forEach(subject => {
     const option = document.createElement('option');
     option.value = subject;
     option.textContent = subject;
     filterSubject.append(option);
-});
-
+  });
   const touched = new Set();
-  
-const notesCounter = document.getElementById('notesCounter');
-
-function updateNotesCounter() {
-    notesCounter.textContent =
-        `${inputs.notes.value.length} / 240 characters`;
-}
-
-inputs.notes.addEventListener('input', updateNotesCounter);
-
+  const notesCounter = document.getElementById('notesCounter');
+  function updateNotesCounter() {
+    notesCounter.textContent = `${inputs.notes.value.length} / 240 characters`;
+  }
+  inputs.notes.addEventListener('input', updateNotesCounter);
   let editingId = null;
 
   const fieldErrors = {
@@ -85,6 +77,7 @@ inputs.notes.addEventListener('input', updateNotesCounter);
   }
   function clearForm() {
     form.reset();
+    updateNotesCounter();
     editingId = null;
     inputs.dueDate.min = OrbitApp.todayISO();
     inputs.estimate.value = '45';
@@ -118,6 +111,12 @@ inputs.notes.addEventListener('input', updateNotesCounter);
     const del = OrbitApp.el('button', 'mini-button mini-danger task-delete', '× Delete');
     del.type = 'button'; del.dataset.action = 'delete'; del.dataset.id = task.id;
     del.setAttribute('aria-label', 'Delete ' + task.title);
+    if (!task.completed) {
+      const focus = OrbitApp.el('button', 'mini-button task-focus', '◷ Focus');
+      focus.type = 'button'; focus.dataset.action = 'focus'; focus.dataset.id = task.id;
+      focus.setAttribute('aria-label', 'Focus on ' + task.title);
+      buttons.append(focus);
+    }
     buttons.append(done, edit, del);
     article.append(top, h3, note, details, buttons);
     return article;
@@ -126,23 +125,14 @@ inputs.notes.addEventListener('input', updateNotesCounter);
     const query = filterSearch.value.trim().toLowerCase();
     const tasks = OrbitStore.getTasks().filter(task => {
       const matchesSearch = `${task.title} ${task.subject} ${task.notes || ''}`.toLowerCase().includes(query);
-const matchesStatus =
-    filterStatus.value === 'all' ||
-    (filterStatus.value === 'complete' && task.completed) ||
-    (filterStatus.value === 'pending' && !task.completed) ||
-    (filterStatus.value === 'overdue' &&
-        !task.completed &&
-        OrbitApp.daysUntil(task.dueDate) < 0);
-
+      const matchesStatus =
+        filterStatus.value === 'all' ||
+        (filterStatus.value === 'complete' && task.completed) ||
+        (filterStatus.value === 'pending' && !task.completed) ||
+        (filterStatus.value === 'overdue' && !task.completed && OrbitApp.daysUntil(task.dueDate) < 0);
       const matchesPriority = filterPriority.value === 'all' || task.priority === filterPriority.value;
-      
-const matchesSubject =
-    filterSubject.value === 'all' ||
-    task.subject === filterSubject.value;
-
-return matchesSearch && matchesStatus &&
-       matchesPriority && matchesSubject;
-
+      const matchesSubject = filterSubject.value === 'all' || task.subject === filterSubject.value;
+      return matchesSearch && matchesStatus && matchesPriority && matchesSubject;
     });
     const mode = filterSort.value;
     tasks.sort((a, b) => {
@@ -158,17 +148,10 @@ return matchesSearch && matchesStatus &&
     list.replaceChildren();
     tasks.forEach(task => list.append(buildCard(task)));
     empty.hidden = tasks.length > 0;
-    
-const emptyMessage = empty.querySelector('p');
-
-emptyMessage.textContent =
-    OrbitStore.getTasks().length === 0
-        ? 'No tasks yet. Create your first task using the form.'
-        : 'No matching tasks. Change your search or reset filters.';
-
-countLabel.textContent =
-    `Showing ${tasks.length} of ${OrbitStore.getTasks().length} tasks`;
-
+    empty.querySelector('p').textContent = OrbitStore.getTasks().length === 0
+      ? 'No tasks yet. Create your first task using the form.'
+      : 'No matching tasks. Change your search or reset filters.';
+    countLabel.textContent = `Showing ${tasks.length} of ${OrbitStore.getTasks().length} tasks`;
     OrbitApp.updateTaskCount();
     const stats = OrbitApp.calcStats(OrbitStore.getTasks(), OrbitStore.getSessions());
     document.getElementById('plannerPending').textContent = stats.pending;
@@ -178,6 +161,7 @@ countLabel.textContent =
   function editTask(task) {
     editingId = task.id;
     Object.keys(inputs).forEach(key => { inputs[key].value = task[key] ?? ''; });
+    updateNotesCounter();
     document.getElementById('formTitle').textContent = 'Edit this task';
     document.getElementById('submitText').textContent = 'Save changes';
     document.getElementById('cancelEdit').hidden = false;
@@ -195,12 +179,19 @@ countLabel.textContent =
     if (index === -1) return;
     const task = tasks[index];
     if (button.dataset.action === 'edit') return editTask(task);
+    if (button.dataset.action === 'focus') {
+      OrbitStore.setActiveTask(task.id);
+      window.location.href = 'focus.html';
+      return;
+    }
     if (button.dataset.action === 'delete') {
-      if (!window.confirm(`Delete "${task.title}"?`)) return;
-      tasks.splice(index, 1);
-      if (editingId === task.id) clearForm();
-      OrbitStore.saveTasks(tasks);
-      OrbitEffects.toast('Task deleted.');
+      OrbitUI.ask({ title: 'Delete this task?', message: `"${task.title}" will be removed from your planner.`, accept: 'Delete task', onAccept: () => {
+        const fresh = OrbitStore.getTasks().filter(item => item.id !== task.id);
+        if (editingId === task.id) clearForm();
+        OrbitStore.saveTasks(fresh);
+        OrbitEffects.toast('Task deleted.'); render();
+      }});
+      return;
     } else if (button.dataset.action === 'toggle') {
       task.completed = !task.completed;
       task.completedAt = task.completed ? new Date().toISOString() : null;
@@ -241,53 +232,50 @@ countLabel.textContent =
     clearForm();
     statusLabel.textContent = wasEditing ? 'Your task has been updated successfully.' : 'Your new task has been added successfully.';
     OrbitEffects.toast(wasEditing ? 'Task updated!' : 'Task added!');
-    filterSubject.value = 'all';
     render();
   });
   list.addEventListener('click', onCardClick);
   [filterSearch, filterStatus, filterPriority, filterSubject, filterSort].forEach(input => input.addEventListener(input === filterSearch ? 'input' : 'change', render));
   document.getElementById('cancelEdit').addEventListener('click', () => { clearForm(); statusLabel.textContent = ''; });
   document.getElementById('clearFilters').addEventListener('click', () => {
-    filterSearch.value = ''; filterStatus.value = 'all'; filterPriority.value = 'all'; filterSort.value = 'due'; render();
+    filterSearch.value = ''; filterStatus.value = 'all'; filterPriority.value = 'all'; filterSubject.value = 'all'; filterSort.value = 'due'; render();
   });
   document.getElementById('clearDemo').addEventListener('click', () => {
     const sampleCount = OrbitStore.getTasks().filter(t => t.isDemo).length;
     if (!sampleCount) { OrbitEffects.toast('There are no demo tasks to remove.'); return; }
-    if (!window.confirm(`Remove ${sampleCount} sample tasks? Your own tasks will remain.`)) return;
-    OrbitStore.clearSampleTasks();
-    render(); OrbitEffects.toast('Demo tasks removed.');
+    OrbitUI.ask({ title: 'Remove starter tasks?', message: `Remove ${sampleCount} sample tasks? All of your own tasks will stay.`, accept: 'Remove samples', onAccept: () => {
+      OrbitStore.clearSampleTasks(); render(); OrbitEffects.toast('Demo tasks removed.');
+    }});
   });
-  
-document.addEventListener('keydown', function(event) {
+  document.getElementById('clearAllTasks').addEventListener('click', () => {
+    const total = OrbitStore.getTasks().length;
+    if (!total) { OrbitEffects.toast('Your planner is already empty.'); return; }
+    OrbitUI.ask({ title: 'Clear your entire planner?', message: `All ${total} tasks will be removed. Export a backup from My profile first if you want to keep them.`, accept: 'Clear all tasks', onAccept: () => {
+      OrbitStore.saveTasks([]); OrbitStore.setActiveTask(''); clearForm(); render(); OrbitEffects.toast('All tasks cleared.');
+    }});
+  });
+  // Keyboard shortcuts are ignored while typing in an input or selecting controls.
+  document.addEventListener('keydown', function(event) {
     const active = document.activeElement;
     const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
-    
-    if (event.key.toLowerCase() === 'n' &&
-        !typing &&
-        !['BUTTON', 'A'].includes(active.tagName) &&
-        !event.ctrlKey && !event.altKey && !event.metaKey &&
-        !event.repeat) {
-
-        event.preventDefault();
-        document.getElementById('taskFormSection').scrollIntoView({
-            behavior: 'smooth'
-        });
-        inputs.title.focus({ preventScroll: true });
+    const hasModifier = event.ctrlKey || event.altKey || event.metaKey;
+    if (hasModifier || event.repeat) return;
+    if (event.key.toLowerCase() === 'n' && !typing && !['BUTTON', 'A'].includes(active.tagName)) {
+      event.preventDefault();
+      document.getElementById('taskFormSection').scrollIntoView({ behavior: 'smooth' });
+      inputs.title.focus({ preventScroll: true });
     }
-
-
     if (event.key === '/' && !typing) {
-        event.preventDefault();
-        filterSearch.focus();
+      event.preventDefault();
+      filterSearch.focus();
     }
-
     if (event.key === 'Escape' && active === filterSearch) {
-        filterSearch.value = '';
-        render();
-        filterSearch.blur();
+      filterSearch.value = '';
+      render();
+      filterSearch.blur();
     }
-});
-
+  });
   inputs.dueDate.min = OrbitApp.todayISO();
+  updateNotesCounter();
   render();
 })();

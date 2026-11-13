@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personalize your study goals, back up tasks and control your ORBIT workspace.">
+  <title>My profile · ORBIT Student OS</title>
+  <link rel="icon" href="images/orbit-logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/theme-init.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/final.css">
+</head>
+<body data-page="profile">
+  <a class="skip-link" href="#mainContent">Skip to main content</a>
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Application sidebar">
+      <a class="brand-lockup" href="index.html"><img src="images/orbit-logo.svg" alt="ORBIT planet logo" width="48" height="48"><span><strong>ORBIT</strong><small>STUDENT OS</small></span></a>
+      <div class="sidebar-section-label">YOUR SPACE</div>
+      <nav aria-label="Main navigation" class="sidebar-nav"><a href="index.html" class="sidebar-link"><span class="nav-glyph" aria-hidden="true">◈</span><span>Dashboard</span></a>
+<a href="planner.html" class="sidebar-link " ><span class="nav-glyph" aria-hidden="true">▤</span><span>Task planner</span><span class="nav-count" id="navTaskCount">0</span></a>
+<a href="focus.html" class="sidebar-link " ><span class="nav-glyph" aria-hidden="true">◷</span><span>Focus & insights</span></a><a href="profile.html" class="sidebar-link active" aria-current="page"><span class="nav-glyph" aria-hidden="true">♙</span><span>My profile</span></a></nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-quote"><span class="quote-symbol">✦</span><p>Small steps build big results.</p><span class="muted-tiny">ONE SESSION AT A TIME</span></div>
+        <div class="sidebar-user"><span class="avatar" id="workspaceAvatar">S</span><span><strong id="workspaceName">Student workspace</strong><small>Saved in this browser</small></span><span class="online-dot" aria-label="Local workspace"></span></div>
+      </div>
+    </aside>
+    <div class="main-panel">
+      <header class="topbar">
+        <div class="topbar-breadcrumb">Workspace <span class="breadcrumb-separator">/</span> <strong>My profile</strong></div>
+        <div class="topbar-right"><button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to light mode" aria-pressed="false"><span class="theme-symbol" aria-hidden="true">☀</span><span class="theme-copy">Light mode</span></button><span class="topbar-date" id="currentDate"></span><span class="status-dot" aria-hidden="true"></span><span class="status-label">All local</span></div>
+      </header>
+      <main class="content-shell" id="mainContent">
+<section class="page-heading"><div><p class="eyebrow">YOUR SPACE · YOUR PACE</p><h1>Make it <em>yours.</em></h1><p class="section-intro">Set your study identity and personal goals. Everything stays on this device.</p></div><a href="index.html" class="secondary-link">↗ Back to dashboard</a></section>
+<div class="profile-hero" aria-label="Your workspace identity"><div class="profile-hero-glow" aria-hidden="true">◉</div><div><p class="eyebrow" id="profileStatus">SET UP YOUR PROFILE</p><h2 id="profileWelcome">Your next chapter starts here.</h2><p id="profileSubtitle">Tell ORBIT how you like to study; your progress and goals will follow you on every page.</p></div><span class="profile-hero-icon" aria-hidden="true">✦</span></div>
+<section class="goal-strip" aria-label="Personal progress">
+ <div class="goal-tile"><span>Today's focus goal</span><strong id="goalFocusText">0 / 60 min</strong><div class="meter" role="progressbar" id="goalFocusMeter" aria-label="Daily focus goal progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="meter-fill" id="goalFocusBar"></div></div></div>
+ <div class="goal-tile"><span>Tasks finished</span><strong id="goalTasksText">0</strong><p>Accomplishments from your planner</p></div>
+ <div class="goal-tile"><span>Study sessions</span><strong id="goalSessionsText">0</strong><p>Completed focus blocks</p></div>
+</section>
+<div class="profile-grid">
+ <section class="panel profile-editor" aria-labelledby="profileFormTitle"><p class="eyebrow">STUDY IDENTITY</p><h2 id="profileFormTitle">Personalize ORBIT</h2><p class="helper-text">No sign-up, password or account needed.</p>
+ <form id="profileForm" novalidate>
+  <div class="form-group"><label class="form-label" for="profileName">Display name <span class="required">*</span></label><input id="profileName" name="name" class="form-control" autocomplete="nickname" maxlength="40" placeholder="e.g. Sagat" required aria-describedby="profileNameError"><div class="field-error" id="profileNameError" aria-live="polite"></div></div>
+  <div class="form-group"><label class="form-label" for="profileCourse">Study track <span class="required">*</span></label><select id="profileCourse" name="course" class="form-select" required aria-describedby="profileCourseError"><option value="">Choose your track</option><option>Software Engineering</option><option>Computer Science</option><option>Business & Economics</option><option>Languages & Humanities</option><option>Self-study</option></select><div class="field-error" id="profileCourseError" aria-live="polite"></div></div>
+  <div class="row g-3 form-goal-bootstrap"><div class="col-md-6 form-group"><label class="form-label" for="profileGoal">Daily focus goal (min) <span class="required">*</span></label><input id="profileGoal" name="dailyGoal" type="number" min="15" max="480" step="5" value="60" class="form-control" required aria-describedby="profileGoalError"><div class="field-error" id="profileGoalError" aria-live="polite"></div></div>
+   <div class="col-md-6 form-group"><label class="form-label" for="profileWeekly">Weekly task target <span class="required">*</span></label><input id="profileWeekly" name="weeklyGoal" type="number" min="1" max="50" step="1" value="5" class="form-control" required aria-describedby="profileWeeklyError"><div class="field-error" id="profileWeeklyError" aria-live="polite"></div></div></div>
+  <div class="form-group"><label class="form-label" for="profileStyle">Preferred focus style <span class="required">*</span></label><select id="profileStyle" name="studyStyle" class="form-select" aria-describedby="profileStyleError"><option value="balanced">Balanced · 25 minute blocks</option><option value="deep">Deep work · 50 minute blocks</option><option value="sprint">Quick wins · 15 minute blocks</option></select><div class="field-error" id="profileStyleError" aria-live="polite"></div></div>
+  <button type="submit" class="primary-link button-as-link profile-save">Save my profile</button><div class="form-status" id="profileFormStatus" role="status" aria-live="polite"></div>
+ </form></section>
+ <div class="profile-side">
+  <section class="panel backup-panel"><p class="eyebrow">YOUR DATA, YOUR CONTROL</p><h2>Workspace backup</h2><p class="helper-text">Export your tasks, focus sessions and profile as a JSON file. Restore them on this device later.</p><button type="button" id="exportBackup" class="secondary-link backup-button">↓ Export my data</button><label for="backupFile" class="form-label backup-label">Restore from a previous ORBIT backup</label><input type="file" id="backupFile" class="form-control" accept=".json,application/json" aria-describedby="backupError"><div class="field-error" id="backupError" aria-live="polite"></div><button type="button" id="importBackup" class="secondary-button backup-button">↥ Import backup</button><div id="backupStatus" class="form-status" role="status" aria-live="polite"></div></section>
+  <section class="panel study-insight"><p class="eyebrow">✦ WEEKLY MISSION</p><h2 id="weeklyGoalTitle">5 tasks this week</h2><p class="helper-text" id="weeklyGoalDetail">Every completed task moves you forward.</p><div class="meter" role="progressbar" aria-label="Weekly completion goal" id="weeklyGoalMeter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="meter-fill" id="weeklyGoalBar"></div></div><a href="planner.html" class="text-link">Go to my tasks ↗</a></section>
+  <div class="privacy-note"><span class="tiny-star">✦</span> PRIVATE BY DESIGN<br><p>No passwords. No account. No backend. Your profile and study history are stored only in your browser's localStorage.</p></div>
+ </div>
+</div>
+      </main>
+      <footer class="site-footer">
+        <span>© ORBIT Student OS · Final Edition · Made for focused learning.</span>
+        <details class="credits"><summary>Credits &amp; AI use</summary><p>Project developed with assistance from ChatGPT (OpenAI). Uses Bootstrap 5 (MIT), jQuery 3.6.1 (MIT), Google Fonts and the original ORBIT SVG logo. All task examples are demo data. No user information is sent to a server.</p></details>
+      </footer>
+    </div>
+  </div>
+  <dialog id="appConfirmDialog" class="orbit-dialog" aria-labelledby="confirmTitle" aria-describedby="confirmMessage"><div class="dialog-orbit" aria-hidden="true">✦</div><h2 id="confirmTitle">Please confirm</h2><p id="confirmMessage"></p><div class="dialog-actions"><button type="button" class="secondary-button" id="confirmCancel">Keep as it is</button><button type="button" class="primary-link button-as-link" id="confirmAccept">Confirm</button></div></dialog>
+  <div id="globalToast" class="global-toast" role="status" aria-live="polite" hidden></div>
+  <script src="vendor/jquery.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

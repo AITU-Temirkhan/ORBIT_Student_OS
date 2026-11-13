@@ -1,12 +1,12 @@
-# Credits and academic transparency
+# Credits and responsible AI use — ORBIT Final Edition
 
-- **ChatGPT (OpenAI):** assisted with planning, design, JavaScript implementation, debugging suggestions, and documentation for this project. The student must independently inspect, test, adapt, and explain all code before submission.
-- **Bootstrap 5.3.3:** form control classes and grid utilities; licensed MIT. CSS loaded via jsDelivr CDN. https://getbootstrap.com/
-- **jQuery 3.6.1:** locally bundled in `vendor/jquery.min.js` and used for UI effects; licensed MIT. https://jquery.com/
-- **Google Fonts (DM Sans, Outfit):** fonts requested via Google Fonts CDN; fallback system fonts are used if unavailable. See fonts.google.com for license details.
-- **ORBIT logo:** original simple SVG created specifically for this project.
-- **Sample tasks:** fictitious example data, not real school records.
+**Student / project author:** Sagat Temirkhan (individual Final project).
 
-Credits are also displayed **on every page** under the "Credits & AI use" footer section. Include this credit statement in your final submission report, too.
+- **ChatGPT (OpenAI)** — assisted with generating and refactoring HTML, CSS and JavaScript; debugging; accessibility and usability checks; designing the Final Edition feature set; writing test scenarios and drafting the report. The student should review, test, understand and explain every feature before defense.
+- **Bootstrap 5.3.3** — CSS form components, `.row` and `.col-md-6` grid utilities, accessible utility classes. MIT license. Source: https://getbootstrap.com/
+- **jQuery 3.6.1 (bundled)** — `.slideToggle()` tip disclosure, `.fadeIn()`/`.fadeOut()` feedback, and `.animate()` scrolling. MIT license. Source: https://jquery.com/
+- **Google Fonts** — Outfit and DM Sans (font-family declarations) loaded from public font CSS. Source: https://fonts.google.com/
+- **ORBIT SVG mark** — custom project logo in `images/orbit-logo.svg`, used throughout the project.
+- **Demo tasks** — example assignments drafted for this portfolio project, not real user records.
 
-No downloaded website template was used.
+No paid template, stock website, or uncredited backend code has been used. The site does not send task/profile contents to a server; framework/font stylesheets can be retrieved from CDNs as normal website assets.

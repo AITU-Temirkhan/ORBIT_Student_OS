@@ -333,26 +333,19 @@ textarea.form-control { resize:vertical; min-height:70px; }
  .credits { text-align:left; }
 }
 @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+
+/* Accessibility: keyboard skip navigation added after initial release. */
 .skip-link {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 9999;
-    padding: 10px 16px;
-    background: #66e4c9;
-    color: #101625;
-    border-radius: 10px;
-    transform: translateY(-150%);
+  position:fixed; top:12px; left:12px; z-index:9999;
+  padding:10px 16px; background:#66e4c9; color:#101625;
+  border-radius:10px; transform:translateY(-150%);
+  text-decoration:none; font-weight:700;
 }
-
-.skip-link:focus {
-    transform: translateY(0);
+.skip-link:focus-visible, .skip-link:focus {
+  transform:translateY(0);
+  outline:3px solid #fff;
+  outline-offset:2px;
 }
-
-.timer-circle.is-running .timer-progress {
-    stroke: #a899ff;
-}
-
-.timer-circle.is-running .timer-digits strong {
-    color: #a899ff;
-}
+/* Distinguish active sessions from paused / ready sessions. */
+.timer-circle.is-running .timer-progress { stroke:#a899ff; }
+.timer-circle.is-running .timer-digits strong { color:#a899ff; }
