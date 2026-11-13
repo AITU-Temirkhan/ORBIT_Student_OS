@@ -209,3 +209,31 @@ html[data-theme="light"] .search-wrap > span { color:#777ba1; }
     overflow: hidden;
     clip-path: inset(50%);
 }
+
+/* Prevent content from overflowing on small screens */
+html,
+body {
+    max-width: 100%;
+}
+
+.main-panel,
+.content-shell,
+.panel {
+    min-width: 0;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+@media (max-width: 480px) {
+    .content-shell {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .page-heading h1 {
+        overflow-wrap: break-word;
+    }
+}
