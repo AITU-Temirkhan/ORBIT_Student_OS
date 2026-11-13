@@ -139,7 +139,7 @@ p { margin-top:0; }
 .subtle-button,.ghost-button { border:1px solid #40496a; color:#c7c5df; background:#252b45; border-radius:10px; padding:9px 13px; font-size:12px; font-weight:700; }
 .subtle-button:hover,.ghost-button:hover { background:#363b5b; color:var(--text); border-color:#6f6797; }
 .tips-panel { display:none; flex:1 0 100%; border-top:1px solid var(--line); padding-top:14px; color:var(--muted); }
-.tips-panel p { margin:4px 0; font-size:12px; }
+.tips-panel p { margin:4px 0; font-size:14px; line-height:1.7; }
 .demo-note { color:#a8afd0; background:#1b2034; border-radius:12px; font-size:11px; padding:13px 17px; margin-top:24px; }
 .demo-note strong { color:#dcd8fa; }
 /* Planner */
