@@ -74,6 +74,12 @@
   }
 
   const backupFile = document.getElementById('backupFile');
+
+backupFile.addEventListener('change', () => {
+    document.getElementById('backupFileName').textContent =
+        backupFile.files[0]?.name || 'No file chosen';
+});
+
   const backupError = document.getElementById('backupError');
   const backupStatus = document.getElementById('backupStatus');
   document.getElementById('exportBackup').addEventListener('click', () => {
@@ -112,6 +118,7 @@
       form.reset();
       if (current) Object.keys(inputs).forEach(key => { if (current[key] !== undefined) inputs[key].value = current[key]; });
       backupFile.value = '';
+      document.getElementById('backupFileName').textContent = 'No file chosen';
       backupStatus.textContent = 'Workspace restored! Visit your planner to see imported tasks.';
       OrbitEffects.toast('ORBIT backup restored.'); render();
     }});

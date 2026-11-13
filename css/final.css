@@ -162,3 +162,40 @@ html[data-theme="light"] .search-wrap input { color:#2c304c; background:transpar
 html[data-theme="light"] .search-wrap input::placeholder { color:#7e859e; }
 html[data-theme="light"] .search-wrap > span { color:#777ba1; }
 @media(max-width:600px) { .form-goal-bootstrap { grid-template-columns:minmax(0,1fr); } }
+
+.backup-file-picker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.backup-panel .backup-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    min-height: 0;
+    padding: 0;
+    opacity: 0;
+}
+
+.backup-file-label {
+    padding: 9px 15px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.backup-file-label:hover {
+    background: var(--line);
+}
+
+.backup-file-input:focus-visible + .backup-file-label {
+    outline: 2px solid var(--lilac);
+    outline-offset: 3px;
+}

@@ -50,7 +50,22 @@
   <button type="submit" class="primary-link button-as-link profile-save">Save my profile</button><div class="form-status" id="profileFormStatus" role="status" aria-live="polite"></div>
  </form></section>
  <div class="profile-side">
-  <section class="panel backup-panel"><p class="eyebrow">YOUR DATA, YOUR CONTROL</p><h2>Workspace backup</h2><p class="helper-text">Export your tasks, focus sessions and profile as a JSON file. Restore them on this device later.</p><button type="button" id="exportBackup" class="secondary-link backup-button">↓ Export my data</button><label for="backupFile" class="form-label backup-label">Restore from a previous ORBIT backup</label><input type="file" id="backupFile" class="form-control" accept=".json,application/json" aria-describedby="backupError"><div class="field-error" id="backupError" aria-live="polite"></div><button type="button" id="importBackup" class="secondary-button backup-button">↥ Import backup</button><div id="backupStatus" class="form-status" role="status" aria-live="polite"></div></section>
+  <section class="panel backup-panel"><p class="eyebrow">YOUR DATA, YOUR CONTROL</p><h2>Workspace backup</h2><p class="helper-text">Export your tasks, focus sessions and profile as a JSON file. Restore them on this device later.</p><button type="button" id="exportBackup" class="secondary-link backup-button">↓ Export my data</button><label for="backupFile" class="form-label backup-label">Restore from a previous ORBIT backup</label>  
+<div class="backup-file-picker">
+    <input type="file" id="backupFile"
+           class="backup-file-input"
+           accept=".json,application/json"
+           aria-describedby="backupFileName backupError">
+
+    <label for="backupFile" class="backup-file-label">
+        Choose file
+    </label>
+
+    <span id="backupFileName" aria-live="polite">
+        No file chosen
+    </span>
+</div>
+ class="form-control" accept=".json,application/json" aria-describedby="backupError"><div class="field-error" id="backupError" aria-live="polite"></div><button type="button" id="importBackup" class="secondary-button backup-button">↥ Import backup</button><div id="backupStatus" class="form-status" role="status" aria-live="polite"></div></section>
   <section class="panel study-insight"><p class="eyebrow">✦ WEEKLY MISSION</p><h2 id="weeklyGoalTitle">5 tasks this week</h2><p class="helper-text" id="weeklyGoalDetail">Every completed task moves you forward.</p><div class="meter" role="progressbar" aria-label="Weekly completion goal" id="weeklyGoalMeter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="meter-fill" id="weeklyGoalBar"></div></div><a href="planner.html" class="text-link">Go to my tasks ↗</a></section>
   <div class="privacy-note"><span class="tiny-star">✦</span> PRIVATE BY DESIGN<br><p>No passwords. No account. No backend. Your profile and study history are stored only in your browser's localStorage.</p></div>
  </div>
